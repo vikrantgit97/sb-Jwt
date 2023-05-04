@@ -42,7 +42,7 @@ public class ExceptionHandler {
     String error = "No handler found for " + noHandlerFoundException.getHttpMethod() + " " + noHandlerFoundException.getRequestURL();
     // ErrorDetails apiError = new ErrorDetails(ex.getLocalizedMessage(), error);
     ErrorDetails apiError = new ErrorDetails(error, "RA_SYS_ERR_404");
-    log.debug("handleNoHandlerFoundException : {} ",noHandlerFoundException.getMessage());
+    log.info("handleNoHandlerFoundException : {} ",noHandlerFoundException.getMessage());
     return new ResponseEntity<Object>(apiError, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
 
@@ -50,7 +50,7 @@ public class ExceptionHandler {
   @org.springframework.web.bind.annotation.ExceptionHandler({CommunicationException.class, JDBCConnectionException.class,ConnectException.class, SocketTimeoutException.class})
   protected ResponseEntity<Object> handleNoHandlerFoundException( Exception exception) {
     ErrorDetails apiError = new ErrorDetails(exception.getMessage(), "RA_SYS_ERR_505");
-    log.debug("handleNoHandlerFoundException : {} ",exception.getMessage());
+    log.info("handleNoHandlerFoundException : {} ",exception.getMessage());
     return new ResponseEntity<Object>(apiError, HttpStatus.NOT_FOUND);
   }
 
@@ -146,7 +146,7 @@ public class ExceptionHandler {
     mapping.put("url", request.getRequestURL().toString());
     // mapping.put("data", String.valueOf(errorsMap));
     log.error(mapping.toString());
-    log.debug(mapping.toString(),errorsMap.toString());
+    log.info(mapping.toString(),errorsMap.toString());
     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
@@ -165,7 +165,7 @@ public class ExceptionHandler {
     mapping.put("HTTP_method", request.getMethod());
     mapping.put("url", request.getRequestURL().toString());
     log.error(mapping.toString());
-    log.debug(mapping.toString(),errorDetails.toString());
+    log.info(mapping.toString(),errorDetails.toString());
     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
@@ -173,7 +173,7 @@ public class ExceptionHandler {
   @org.springframework.web.bind.annotation.ExceptionHandler(ProductNotFoundException.class)
   public ResponseEntity<ErrorDetails> handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
     ErrorDetails errorDetails = new ErrorDetails(productNotFoundException.getMessage(), "RA_SYS_ERR_404");
-    log.debug("handleProductNotFoundException : {} ",productNotFoundException.getMessage());
+    log.info("handleProductNotFoundException : {} ",productNotFoundException.getMessage());
     return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
   }
 
@@ -181,7 +181,7 @@ public class ExceptionHandler {
   @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<ErrorDetails> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
     ErrorDetails errorResponse = new ErrorDetails(illegalArgumentException.getMessage(), "RA_SYS_ERR_500");
-    log.debug("handleIllegalArgumentException:{}", illegalArgumentException.getMessage());
+    log.info("handleIllegalArgumentException:{}", illegalArgumentException.getMessage());
     return new ResponseEntity<ErrorDetails>(errorResponse, HttpStatus.NOT_FOUND);
   }
 
@@ -189,7 +189,7 @@ public class ExceptionHandler {
   @org.springframework.web.bind.annotation.ExceptionHandler({RuntimeException.class})
   public ResponseEntity<ErrorDetails> handleRuntimeException(RuntimeException runtimeException) {
     ErrorDetails errorDetails = new ErrorDetails(runtimeException.getMessage(), "RA_SYS_ERR_500");
-    log.debug("handleRuntimeException :{} ",runtimeException.getMessage());
+    log.info("handleRuntimeException :{} ",runtimeException.getMessage());
     return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
@@ -197,7 +197,7 @@ public class ExceptionHandler {
   @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorDetails> handleException(Exception exception) {
     ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), "RA_SYS_ERR_500");
-    log.debug("handleException : {} ",exception.getMessage());
+    log.info("handleException : {} ",exception.getMessage());
     return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 

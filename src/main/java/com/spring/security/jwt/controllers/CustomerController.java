@@ -1,8 +1,5 @@
 package com.spring.security.jwt.controllers;
 
-import java.util.List;
-import javax.validation.Valid;
-
 import com.spring.security.jwt.customresponse.CustomResponse;
 import com.spring.security.jwt.exception.CustomerNotFoundException;
 import com.spring.security.jwt.models.Customer;
@@ -10,14 +7,10 @@ import com.spring.security.jwt.service.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -36,24 +29,23 @@ public class CustomerController {
 
     // ******************************* Register Customer*****************************************************************************//
 
-    @SuppressWarnings("finally")
-    @PostMapping
-    public ResponseEntity<?> registerCustomer(@Valid @RequestBody Customer customer) {
-        try {
-            Customer customer1 = customerService.registerCustomer(customer);
-            data = customer1;
-            code = "CREATED";
-        } catch (CustomerNotFoundException customerNotFoundException) {
-            code = "DATA_NOT_CREATED";data =null;
-        } 	catch (RuntimeException runtimeException) {
-            code = "RUNTIME_EXCEPTION";data =null;
-        } catch (Exception exception) {
-            code = "EXCEPTION";data =null;
-        } finally {
-            return CustomResponse.response(code, data);
-        }
-
-    }
+    // @SuppressWarnings("finally")
+//    @PostMapping
+//    public ResponseEntity<?> registerCustomer(@Valid @RequestBody Customer customer) {
+//        try {
+//            Customer customer1 = customerService.registerCustomer(customer);
+//            data = customer1;
+//            code = "CREATED";
+//        } catch (CustomerNotFoundException customerNotFoundException) {
+//            code = "DATA_NOT_CREATED";data =null;
+//        } 	catch (RuntimeException runtimeException) {
+//            code = "RUNTIME_EXCEPTION";data =null;
+//        } catch (Exception exception) {
+//            code = "EXCEPTION";data =null;
+//        } finally {
+//            return CustomResponse.response(code, data);
+//        }
+//    }
 
     // ******************************** Get All Customer***************************************************************************//
     @SuppressWarnings("finally")
@@ -78,7 +70,7 @@ public class CustomerController {
     // ******************************** Get customer By ID*************************************************************************//
     @SuppressWarnings("finally")
     @GetMapping("{customerNumber}")
-    public ResponseEntity<?> getCustomer(@PathVariable Integer customerNumber) {
+    public ResponseEntity<?> getCustomer(@PathVariable Long customerNumber) {
         try {
 
             Customer customer = customerService.getCustomerById(customerNumber);
@@ -99,7 +91,7 @@ public class CustomerController {
     // *********************************Delete Customer By ID******************************************************************//
     @SuppressWarnings("finally")
     @DeleteMapping("{customerNumber}")
-    public ResponseEntity<?> deleteCustomer(@Valid @PathVariable Integer customerNumber) {
+    public ResponseEntity<?> deleteCustomer(@Valid @PathVariable Long customerNumber) {
 
         try {
             String customer = customerService.deleteCustomer(customerNumber);
@@ -118,7 +110,7 @@ public class CustomerController {
     //******************************* Edit or Update CustomerDetails************************************************************//
     @SuppressWarnings("finally")
     @PutMapping("{customerNumber}")
-    public ResponseEntity<?> updateCustomer(@Valid @PathVariable Integer customerNumber,
+    public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long customerNumber,
                                             @RequestBody Customer customer) {
         try {
             Customer customer1 = customerService.updateCustomerDetail(customerNumber, customer);

@@ -1,54 +1,57 @@
 package com.spring.security.jwt.payload.request;
 
+import com.spring.security.jwt.customvalidation.PostalCode;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Set;
 
 import javax.validation.constraints.*;
- 
+@Data
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
 public class SignupRequest {
-    @NotBlank
-    @Size(min = 3, max = 20)
+
+    private Long id;
+
+    private String customerFirstName;
+
+    private String customerLastName;
+
+    @Pattern(regexp = "^[0-9]{10}", message = "Invalid Mobile Number")
+    private String phone;
+
+    @NotBlank(message = "Address line 1 cannot be blank")
+    private String addressLine1;
+
+    @Size(max = 50, message = "Address line 2 cannot be more than 50 characters")
+    private String addressLine2;
+
+    @NotBlank(message = "City cannot be blank")
+    private String city;
+
+    @NotBlank(message = "State cannot be blank")
+    private String state;
+
+    @PostalCode
+    private Integer postalCode;
+
+    @NotBlank(message = "Country cannot be blank")
+    private String country;
+
+    @Size(min = 3, max = 15, message = "UserName Must be between 3 to 15")
+    //@Pattern(regexp = "^[A-Z a-z]*$", message = "Invalid Input")
     private String username;
- 
+
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
-    
-    private Set<String> role;
-    
-    @NotBlank
-    @Size(min = 6, max = 40)
+
+    @Size(min = 3, max = 120, message = "password Must be between 6 to 120")
     private String password;
-  
-    public String getUsername() {
-        return username;
-    }
- 
-    public void setUsername(String username) {
-        this.username = username;
-    }
- 
-    public String getEmail() {
-        return email;
-    }
- 
-    public void setEmail(String email) {
-        this.email = email;
-    }
- 
-    public String getPassword() {
-        return password;
-    }
- 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public Set<String> getRole() {
-      return this.role;
-    }
-    
-    public void setRole(Set<String> role) {
-      this.role = role;
-    }
+
+    private Set<String> roles;
+
 }
