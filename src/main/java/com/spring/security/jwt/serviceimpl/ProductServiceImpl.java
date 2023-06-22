@@ -198,6 +198,7 @@ public class ProductServiceImpl implements ProductService {
             //Double newPrice =  amount;    //existingProduct.setPrice(newPrice);    //to set new price
             existingProduct.setPrice(decreaseProductPriceAmount);
             return iProductRepo.save(existingProduct);
+
         } else {
             throw new ProductNotFoundException("for increment amount cannot be less than zero & for decrement amount cannot be " + "greater than original price");
         }
