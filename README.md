@@ -1,2 +1,2 @@
 # SpringBoot-Jwt
-Access & Refresh token implemented authentication & athorization.
+Access & Refresh token implemented authentication & athorization
