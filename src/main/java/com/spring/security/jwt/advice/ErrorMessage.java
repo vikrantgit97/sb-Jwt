@@ -19,6 +19,7 @@ public class ErrorMessage {
     return statusCode;
   }
 
+
   public Date getTimestamp() {
     return timestamp;
   }
