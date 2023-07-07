@@ -1,8 +1,6 @@
 package com.spring.security.jwt.runner;
 
 import com.github.javafaker.Faker;
-import com.spring.security.jwt.models.OrderDetails;
-import com.spring.security.jwt.repository.OrderDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

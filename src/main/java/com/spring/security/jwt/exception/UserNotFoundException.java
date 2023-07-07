@@ -3,9 +3,9 @@ package com.spring.security.jwt.exception;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class CustomerNotFoundException extends RuntimeException {
+public class UserNotFoundException extends RuntimeException {
 
-    public CustomerNotFoundException(String msg) {
+    public UserNotFoundException(String msg) {
         super(msg);
     }
 }

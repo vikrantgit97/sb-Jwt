@@ -2,19 +2,19 @@ package com.spring.security.jwt.repository;
 
 
 
-import com.spring.security.jwt.models.Customer;
+import com.spring.security.jwt.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    Customer findBycustomerFirstName(String customerFirstName);
+public interface CustomerRepository extends JpaRepository<User, Long> {
+    User findBycustomerFirstName(String customerFirstName);
 
-    Customer findBycustomerLastName(String customerLastName);
+    User findBycustomerLastName(String customerLastName);
 
-    Optional<Customer> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     Boolean existsByUsername(String username);
 

@@ -1,6 +1,6 @@
 package com.spring.security.jwt.security.services;
 
-import com.spring.security.jwt.models.Customer;
+import com.spring.security.jwt.models.User;
 import com.spring.security.jwt.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +17,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Customer customer = customerRepo.findByUsername(username)
+    User user = customerRepo.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
-    return UserDetailsImpl.build(customer);
+    return UserDetailsImpl.build(user);
   }
 
 }

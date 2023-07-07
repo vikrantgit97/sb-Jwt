@@ -18,5 +18,4 @@ public class SpringBootSecurityJwtApplication {
 		SpringApplication.run(SpringBootSecurityJwtApplication.class, args);
 	}
 
-
 }

@@ -2,7 +2,6 @@ package com.spring.security.jwt.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.spring.security.jwt.customvalidation.PostalCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,18 +20,18 @@ import java.util.Set;
 @Data
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class Customer {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Size(min = 3, max = 15, message = "Customer First Name Must be between 3 to 15")
     @Pattern(regexp = "^[A-Z a-z]*$", message = "Invalid Input")
-    private String customerFirstName;
+    private String userFirstName;
 
     @Size(min = 3, max = 15, message = "Customer Last Name Must be between 3 to 15")
     @Pattern(regexp = "^[A-Z a-z]*$", message = "Invalid Input")
-    private String customerLastName;
+    private String userLastName;
 
     @Pattern(regexp = "^[0-9]{10}", message = "Invalid Mobile Number")
     private String phone;
@@ -51,7 +50,6 @@ public class Customer {
     @Pattern(regexp = "^[A-Z a-z]*$", message = "Invalid Input")
     private String state;
 
-    @PostalCode
     private Integer postalCode;
 
     @NotBlank(message = "Country cannot be blank")
@@ -77,20 +75,20 @@ public class Customer {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public Customer(String username, String email, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public Customer(String username, String email) {
+    public User(String username, String email) {
         this.username = username;
         this.email = email;
     }
 
-    public Customer(String customerFirstName, String customerLastName, String phone, String addressLine1, String addressLine2, String city, String state, Integer postalCode, String country, String username, @NonNull String email, String password, Set<Role> roles) {
-        this.customerFirstName = customerFirstName;
-        this.customerLastName = customerLastName;
+    public User(String userFirstName, String userLastName, String phone, String addressLine1, String addressLine2, String city, String state, Integer postalCode, String country, String username, @NonNull String email, String password, Set<Role> roles) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
         this.phone = phone;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
@@ -105,9 +103,9 @@ public class Customer {
     }
 
 
-    public Customer(String customerFirstName, String customerLastName, String phone, String addressLine1, String addressLine2, String city, String state, Integer postalCode, String country, String username, String email, String password) {
-        this.customerFirstName = customerFirstName;
-        this.customerLastName = customerLastName;
+    public User(String userFirstName, String userLastName, String phone, String addressLine1, String addressLine2, String city, String state, Integer postalCode, String country, String username, String email, String password) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
         this.phone = phone;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;

@@ -1,7 +1,7 @@
 package com.spring.security.jwt.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.spring.security.jwt.models.Customer;
+import com.spring.security.jwt.models.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,7 +30,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public static UserDetailsImpl build(Customer user) {
+	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 				.collect(Collectors.toList());

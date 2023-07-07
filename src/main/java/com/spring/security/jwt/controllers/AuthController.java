@@ -1,9 +1,9 @@
 package com.spring.security.jwt.controllers;
 
 import com.spring.security.jwt.customresponse.CustomResponse;
-import com.spring.security.jwt.exception.CustomerNotFoundException;
+import com.spring.security.jwt.exception.UserNotFoundException;
 import com.spring.security.jwt.exception.TokenRefreshException;
-import com.spring.security.jwt.models.Customer;
+import com.spring.security.jwt.models.User;
 import com.spring.security.jwt.models.RefreshToken;
 import com.spring.security.jwt.payload.request.LoginRequest;
 import com.spring.security.jwt.payload.request.SignupRequest;
@@ -14,7 +14,7 @@ import com.spring.security.jwt.payload.response.TokenRefreshResponse;
 import com.spring.security.jwt.security.jwt.JwtUtils;
 import com.spring.security.jwt.security.services.RefreshTokenService;
 import com.spring.security.jwt.security.services.UserDetailsImpl;
-import com.spring.security.jwt.service.CustomerService;
+import com.spring.security.jwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
   private String code;
@@ -43,7 +43,7 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  private CustomerService customerService;
+  private UserService userService;
 
   @Autowired
   private JwtUtils jwtUtils;
@@ -51,7 +51,7 @@ public class AuthController {
   @Autowired
   private RefreshTokenService refreshTokenService;
 
-  @PostMapping("/signin")
+  @PostMapping("/sign-in")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager
@@ -76,10 +76,10 @@ public class AuthController {
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     try {
-      Customer customer = customerService.registerCustomerSignUp(signUpRequest);
+      User user = userService.registerCustomerSignUp(signUpRequest);
       data = "customer registered sucessfully";
       code = "CREATED";
-    } catch (CustomerNotFoundException customerNotFoundException) {
+    } catch (UserNotFoundException userNotFoundException) {
       code = "DATA_NOT_CREATED";data =null;
     } 	catch (RuntimeException runtimeException) {
       code = "RUNTIME_EXCEPTION";data =null;
@@ -91,7 +91,7 @@ public class AuthController {
   }
 
 
-  @PostMapping("/refreshtoken")
+  @PostMapping("/refresh-token")
   public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
     String requestRefreshToken = request.getRefreshToken();
     return refreshTokenService.findByToken(requestRefreshToken)
@@ -106,7 +106,7 @@ public class AuthController {
   }
 
 
-  @PostMapping("/signout")
+  @PostMapping("/logout")
   public ResponseEntity<?> logoutUser() {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Long userId = userDetails.getId();
