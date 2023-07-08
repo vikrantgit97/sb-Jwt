@@ -17,10 +17,6 @@ public interface ProductService {
 
     public List<Product> getAllProducts();
 
-    //public Optional<Product> getOneProduct(Integer productCode);
-
-    //public Iterable<Product> getAllProducts();
-
     public String deleteProductById(Integer productCode);
 
     public String deleteAllProducts();

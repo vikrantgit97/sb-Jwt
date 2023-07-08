@@ -7,20 +7,20 @@ import java.util.List;
 
 
 public interface UserService {
-    public List<User> getCustomerList();
+    public List<User> getUserList();
 
     public User registerCustomerSignUp(SignupRequest signUpRequest);
 
-    public User registerCustomer(User userNumber);
+    public User registerUser(User userNumber);
 
-    public User updateCustomerDetail(Long customerNumber, User user);
+    public User updateUserDetail(Long customerNumber, User user);
 
-    public User getCustomerById(Long customerNumber);
+    public User getUserById(Long customerNumber);
 
     public String deleteCustomer(Long customerNumber);
 
-    public User findBycustomerFirstName(String customerFirstName);
+    public User findByuserFirstName(String customerFirstName);
 
-    public User findBycustomerLastName(String customerLastName);
+    public User findByuserLastName(String customerLastName);
 
 }
