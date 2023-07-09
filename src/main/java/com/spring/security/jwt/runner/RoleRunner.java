@@ -3,7 +3,7 @@ package com.spring.security.jwt.runner;
 import com.spring.security.jwt.models.User;
 import com.spring.security.jwt.models.ERole;
 import com.spring.security.jwt.models.Role;
-import com.spring.security.jwt.repository.CustomerRepository;
+import com.spring.security.jwt.repository.UserRepository;
 import com.spring.security.jwt.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +22,7 @@ public class RoleRunner implements CommandLineRunner {
     private RoleRepository repository;
 
     @Autowired
-    private CustomerRepository customerRepo;
+    private UserRepository customerRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

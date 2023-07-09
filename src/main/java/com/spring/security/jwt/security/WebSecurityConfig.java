@@ -65,18 +65,16 @@ public class WebSecurityConfig {
                 //.antMatchers(HttpMethod.POST, "/customer", "/auth/**").permitAll()
                 .antMatchers(HttpMethod.POST, "customer/add").permitAll()
                 .antMatchers(HttpMethod.GET, "/product").hasAuthority("ROLE_USER")
-                .antMatchers(HttpMethod.POST, "/order").hasAuthority("ROLE_USER")
                 .antMatchers(HttpMethod.PATCH, "/product/{id}").hasAuthority("ROLE_USER")
                 .antMatchers("/product**").hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN")
-                .antMatchers("/order**", "/customer**").hasAuthority("ROLE_MODERATOR")
+                .antMatchers( "/customer**").hasAuthority("ROLE_MODERATOR")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        ;
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationJwtTokenFilter(),
                 UsernamePasswordAuthenticationFilter.class);
         return http.build();
