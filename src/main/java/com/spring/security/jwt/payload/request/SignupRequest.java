@@ -1,6 +1,5 @@
 package com.spring.security.jwt.payload.request;
 
-import com.spring.security.jwt.customvalidation.PostalCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +33,6 @@ public class SignupRequest {
     @NotBlank(message = "State cannot be blank")
     private String state;
 
-    @PostalCode
     private Integer postalCode;
 
     @NotBlank(message = "Country cannot be blank")
