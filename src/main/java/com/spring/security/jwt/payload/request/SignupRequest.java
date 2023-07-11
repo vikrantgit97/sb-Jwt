@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 @Data
 @NoArgsConstructor(force = true)
 @AllArgsConstructor

@@ -1,7 +1,7 @@
 package com.spring.security.jwt.dto;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
 public class StatusConverter implements AttributeConverter<Status, String> {

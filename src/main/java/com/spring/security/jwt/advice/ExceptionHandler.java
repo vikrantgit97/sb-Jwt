@@ -25,7 +25,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.naming.CommunicationException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.sql.SQLException;
