@@ -1,4 +1,4 @@
-# SpringBoot-Jwt 
+# SpringBoot-Jwt  
 Access & Refresh token implemented authentication & athorization
 # Spring Boot Refresh Token with JWT example
 
