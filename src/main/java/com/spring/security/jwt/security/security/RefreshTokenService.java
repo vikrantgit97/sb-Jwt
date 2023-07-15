@@ -1,4 +1,4 @@
-package com.spring.security.jwt.security.services;
+package com.spring.security.jwt.security.security;
 
 import com.spring.security.jwt.exception.TokenRefreshException;
 import com.spring.security.jwt.models.RefreshToken;

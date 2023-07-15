@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "customer_tbl", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
+@Table(name = "user_tbl", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
 @Data
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
@@ -72,8 +72,10 @@ public class User {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public User(String username, String email, String password) {
         this.username = username;

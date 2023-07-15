@@ -1,4 +1,4 @@
-package com.spring.security.jwt.security.services;
+package com.spring.security.jwt.security.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.security.jwt.models.User;

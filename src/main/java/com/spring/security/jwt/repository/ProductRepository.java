@@ -9,17 +9,17 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    public List<Product> findAllByOrderByProductNameAsc();
+    List<Product> findAllByOrderByProductNameAsc();
 
-    //public List<Product> findAllByOrderByProductNameDesc();
+    // List<Product> findAllByOrderByProductNameDesc();
 
-    public List<Product> findByProductNameContainsAllIgnoreCase(String name);
+    List<Product> findByProductNameContainsAllIgnoreCase(String name);
 
     /* @Query("SELECT p FROM Product p WHERE p.productCode IN :productCodes")
      List<Product> findByProductCodes(@Param("productCodes") List<Integer> productCodes);*/
 
-    public List<Product> findByProductCodeIn(List<Integer> collect);
+    List<Product> findByProductCodeIn(List<Integer> collect);
 
-    public List<Product> findByProductCodeInAndQuantityInStockGreaterThan(List<Integer> productCodes, int quantityInStock);
+    List<Product> findByProductCodeInAndQuantityInStockGreaterThan(List<Integer> productCodes, int quantityInStock);
 
 }

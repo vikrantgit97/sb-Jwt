@@ -1,15 +1,20 @@
 package com.spring.security.jwt.serviceimpl;
+
 import com.github.javafaker.Faker;
 import com.spring.security.jwt.exception.ProductNotFoundException;
 import com.spring.security.jwt.models.Product;
 import com.spring.security.jwt.repository.ProductRepository;
 import com.spring.security.jwt.service.ProductService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
-import jakarta.transaction.Transactional;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 @Service
@@ -70,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return "One product deleted " + productCode;
         } catch (RuntimeException e) {
-            throw new ProductNotFoundException(" Product not found " + productCode+e.getMessage());
+            throw new ProductNotFoundException(" Product not found " + productCode + e.getMessage());
         }
     }
 

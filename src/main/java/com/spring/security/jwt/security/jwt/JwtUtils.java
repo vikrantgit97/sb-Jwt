@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.spring.security.jwt.security.services.UserDetailsImpl;
+import com.spring.security.jwt.security.security.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
 

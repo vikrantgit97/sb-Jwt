@@ -3,7 +3,7 @@ package com.spring.security.jwt.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "user_roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
