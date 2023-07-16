@@ -75,7 +75,7 @@ public class User {
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role.RoleName> roles;
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -88,7 +88,7 @@ public class User {
         this.email = email;
     }
 
-    public User(String userFirstName, String userLastName, String phone, String addressLine1, String addressLine2, String city, String state, Integer postalCode, String country, String username, @NonNull String email, String password, Set<Role> roles) {
+    public User(String userFirstName, String userLastName, String phone, String addressLine1, String addressLine2, String city, String state, Integer postalCode, String country, String username, @NonNull String email, String password, Set<Role.RoleName> roles) {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.phone = phone;

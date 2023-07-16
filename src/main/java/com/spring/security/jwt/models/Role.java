@@ -1,39 +1,32 @@
 package com.spring.security.jwt.models;
 
+
 import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "user_roles")
-public class Role {
+@Data
+public class Role implements GrantedAuthority {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private ERole name;
+    @Column(unique = true, nullable = false)
+    private RoleName roleName;
 
-    public Role() {
-
+    public String getAuthority() {
+        return roleName.name();
     }
 
-    public Role(ERole name) {
-        this.name = name;
+    public enum RoleName {
+        ROLE_USER,
+        ROLE_MODERATOR,
+        ROLE_ADMIN
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public ERole getName() {
-        return name;
-    }
-
-    public void setName(ERole name) {
-        this.name = name;
-    }
 }
+
