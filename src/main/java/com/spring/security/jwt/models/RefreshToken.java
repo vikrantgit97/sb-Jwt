@@ -1,10 +1,9 @@
 package com.spring.security.jwt.models;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-
-import jakarta.persistence.*;
 
 @Data
 @Entity(name = "refresh_token")
@@ -22,6 +21,10 @@ public class RefreshToken {
 
     @Column(nullable = false)
     private Instant expiryDate;
+
+    public boolean revoked;
+
+    public boolean expired;
 }
 
 

@@ -1,5 +1,7 @@
 package com.spring.security.jwt.payload.response;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.util.List;
@@ -7,7 +9,8 @@ import java.util.List;
 @Data
 public class JwtResponse {
 	private String token;
-	private String type = "Bearer";
+	@Enumerated(EnumType.STRING)
+	public Token tokenType = Token.BEARER;
 	private String refreshToken;
 	private Long id;
 	private String username;
@@ -21,5 +24,9 @@ public class JwtResponse {
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+	}
+
+	public enum Token{
+		BEARER
 	}
 }

@@ -1,12 +1,11 @@
 package com.spring.security.jwt.security;
 
+import com.spring.security.jwt.repository.UserRepository;
 import com.spring.security.jwt.security.jwt.AuthEntryPointJwt;
 import com.spring.security.jwt.security.jwt.AuthTokenFilter;
-import com.spring.security.jwt.security.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -14,6 +13,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,14 +22,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity( securedEnabled = true,// jsr250Enabled = true,
-        prePostEnabled = true)
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,// jsr250Enabled = true,
+        prePostEnabled = true
+)
 public class WebSecurityConfig {
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -37,13 +41,18 @@ public class WebSecurityConfig {
 
 
     @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> userRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
@@ -56,25 +65,31 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "customer/add").permitAll()
-                .requestMatchers(HttpMethod.GET, "/product").hasAuthority("ROLE_USER")
-                .requestMatchers(HttpMethod.PATCH, "/product/{id}").hasAuthority("ROLE_USER")
-                .requestMatchers("/product**").hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN")
-                .requestMatchers( "/customer**").hasAuthority("ROLE_MODERATOR")
-                .anyRequest().authenticated()
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable());
+        http.authorizeRequests()
+                .requestMatchers(WHITELIST)
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(authenticationJwtTokenFilter(),
-                UsernamePasswordAuthenticationFilter.class);
+                //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
+
+    private static final String[] WHITELIST = {
+            "/api/v1/user/sign-in",
+            "/api/v1/user/signup",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/webjars/**"
+    };
 
 }
