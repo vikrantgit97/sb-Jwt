@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface UserService {
-    public List<User> getUserList();
+    public Long getUserList();
 
     public User registerCustomerSignUp(SignupRequest signUpRequest);
 
@@ -23,4 +23,5 @@ public interface UserService {
 
     public User findByuserLastName(String customerLastName);
 
+    public User findByUsername(String username);
 }

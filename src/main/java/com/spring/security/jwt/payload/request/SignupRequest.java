@@ -14,9 +14,9 @@ public class SignupRequest {
 
     private Long id;
 
-    private String customerFirstName;
+    private String userFirstName;
 
-    private String customerLastName;
+    private String userLastName;
 
     @Pattern(regexp = "^[0-9]{10}", message = "Invalid Mobile Number")
     private String phone;

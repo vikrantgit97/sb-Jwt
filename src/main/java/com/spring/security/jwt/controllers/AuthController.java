@@ -7,23 +7,23 @@ import com.spring.security.jwt.payload.request.LoginRequest;
 import com.spring.security.jwt.payload.request.SignupRequest;
 import com.spring.security.jwt.payload.request.TokenRefreshRequest;
 import com.spring.security.jwt.payload.response.JwtResponse;
-import com.spring.security.jwt.payload.response.MessageResponse;
 import com.spring.security.jwt.payload.response.TokenRefreshResponse;
 import com.spring.security.jwt.security.jwt.JwtUtils;
 import com.spring.security.jwt.security.security.RefreshTokenService;
 import com.spring.security.jwt.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,17 +56,26 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImpl userDetails = authentication.getPrincipal();
+        Object principal = authentication.getPrincipal();
 
-        String jwt = jwtUtils.generateToken(userDetails);
+        String jwt = jwtUtils.generateToken((UserDetails) principal);
 
-        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+        String s = jwtUtils.extractUsername(jwt);
+
+        User byUsername = userService.findByUsername(s);
+        List<String> roles = ((UserDetails) principal).getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(byUsername.getId());
 
-        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
-                userDetails.getUsername(), userDetails.getEmail(), roles));
+        return ResponseEntity.ok(new JwtResponse
+                (
+                        jwt,
+                        refreshToken.getToken(),
+                        byUsername.getId(),
+                        byUsername.getUsername(),
+                        byUsername.getEmail(),
+                        roles));
     }
 
 
@@ -93,11 +102,11 @@ public class AuthController {
     }
 
 
-    @PostMapping("/logout")
+    /*@PostMapping("/logout")
     public ResponseEntity<?> logoutUser() {
         UserDetailsImpl userDetails =  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = userDetails.getId();
         refreshTokenService.deleteByUserId(userId);
         return ResponseEntity.ok(new MessageResponse("Log out successful!"));
-    }
+    }*/
 }
