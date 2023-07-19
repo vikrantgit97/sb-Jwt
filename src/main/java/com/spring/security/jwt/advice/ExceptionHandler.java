@@ -36,7 +36,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class ExceptionHandler {
 
-
   @org.springframework.web.bind.annotation.ExceptionHandler(NoHandlerFoundException.class)
   protected ResponseEntity<Object> handleNoHandlerFoundException( NoHandlerFoundException noHandlerFoundException, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String error = "No handler found for " + noHandlerFoundException.getHttpMethod() + " " + noHandlerFoundException.getRequestURL();
@@ -182,7 +181,7 @@ public class ExceptionHandler {
   public ResponseEntity<ErrorDetails> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
     ErrorDetails errorResponse = new ErrorDetails(illegalArgumentException.getMessage(), "RA_SYS_ERR_500");
     log.info("handleIllegalArgumentException:{}", illegalArgumentException.getMessage());
-    return new ResponseEntity<ErrorDetails>(errorResponse, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
   }
 
 

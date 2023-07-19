@@ -32,17 +32,19 @@ public class WebSecurityConfig {
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Autowired
-    private UserRepository userRepo;
+    private UserRepository userRepository;
 
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
-    }
+//    @Autowired
+//    private AuthTokenFilter authTokenFilter;
 
+//    @Bean
+//    public AuthTokenFilter authenticationJwtTokenFilter() {
+//        return new AuthTokenFilter();
+//    }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userRepo.findByUsername(username)
+        return username -> userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
@@ -74,15 +76,15 @@ public class WebSecurityConfig {
                 .authenticated()
                 .and()
                 //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider());
+               // .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 
     private static final String[] WHITELIST = {
             "/api/v1/user/sign-in",
-            "/api/v1/user/signup",
+            "/api/v1/user/sign-up",
             "/configuration/ui",
             "/swagger-resources/**",
             "/configuration/security",

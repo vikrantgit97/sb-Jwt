@@ -42,7 +42,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return repository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User Not found"));
+        return repository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("User Not found")
+        );
     }
 
     @Override
@@ -52,26 +54,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUserDetail(Long customerNumber, User user) {
-        return null;
+        repository.findById(customerNumber).orElseThrow(
+                () -> new IllegalArgumentException("customer not found " + customerNumber)
+        );
+        return repository.save(user);
     }
 
     @Override
     public User getUserById(Long customerNumber) {
-        return null;
+        return repository.findById(customerNumber).orElseThrow(
+                () -> new IllegalArgumentException("customer not found " + customerNumber));
     }
 
     @Override
     public String deleteCustomer(Long customerNumber) {
-        return null;
+        repository.deleteById(customerNumber);
+        return "deleted " + customerNumber;
     }
 
     @Override
     public User findByuserFirstName(String customerFirstName) {
-        return null;
+        return repository.findByUserFirstName(customerFirstName);
     }
 
     @Override
     public User findByuserLastName(String customerLastName) {
-        return null;
+        return repository.findByUserLastName(customerLastName);
     }
 }

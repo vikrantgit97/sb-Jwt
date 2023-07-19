@@ -79,7 +79,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         User user = userService.registerCustomerSignUp(signUpRequest);
         data = "customer registered successfully";

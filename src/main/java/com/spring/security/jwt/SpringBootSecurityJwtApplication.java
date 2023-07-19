@@ -17,5 +17,4 @@ public class SpringBootSecurityJwtApplication {
 		Dotenv.configure().load();       //to load the .env file
 		SpringApplication.run(SpringBootSecurityJwtApplication.class, args);
 	}
-
 }
