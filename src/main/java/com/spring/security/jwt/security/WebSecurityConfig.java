@@ -34,8 +34,8 @@ public class WebSecurityConfig {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private AuthTokenFilter authTokenFilter;
+    @Autowired
+    private AuthTokenFilter authTokenFilter;
 
 //    @Bean
 //    public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -76,8 +76,8 @@ public class WebSecurityConfig {
                 .authenticated()
                 .and()
                 //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                .authenticationProvider(authenticationProvider());
-               // .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }

@@ -77,14 +77,13 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
             name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+            joinColumns = @JoinColumn(name = "user_id"))
+            @Column(name = "role_id")
+    @Enumerated(EnumType.STRING)
     private Set<Role.RoleName> roles;
-
 
     public User(String username, String email, String password) {
         this.username = username;
