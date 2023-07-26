@@ -1,8 +1,8 @@
 package com.spring.security.jwt.security;
 
-import com.spring.security.jwt.repository.UserRepository;
 import com.spring.security.jwt.security.jwt.AuthEntryPointJwt;
 import com.spring.security.jwt.security.jwt.AuthTokenFilter;
+import com.spring.security.jwt.security.security.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +13,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,26 +30,15 @@ public class WebSecurityConfig {
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private AuthTokenFilter authTokenFilter;
 
-//    @Bean
-//    public AuthTokenFilter authenticationJwtTokenFilter() {
-//        return new AuthTokenFilter();
-//    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+    @Autowired
+    private MyUserDetailService myUserDetailService;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(myUserDetailService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -79,12 +66,14 @@ public class WebSecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         return http.build();
     }
 
     private static final String[] WHITELIST = {
-            "/api/v1/user/sign-in",
-            "/api/v1/user/sign-up",
+            "/api/v1/auth/sign-in",
+            "/api/v1/auth/sign-up",
+            "/api/v1/auth/refresh-token",
             "/configuration/ui",
             "/swagger-resources/**",
             "/configuration/security",
@@ -94,4 +83,10 @@ public class WebSecurityConfig {
             "/webjars/**"
     };
 
+
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return username -> userRepository.findByUsername(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//    }
 }

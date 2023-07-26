@@ -22,15 +22,14 @@ public class Role implements GrantedAuthority {
     @Column(unique = true, nullable = false)
     private RoleName roleName;
 
-    public String getAuthority() {
-        return roleName.name();
-    }
-
     public enum RoleName {
         ROLE_USER,
         ROLE_MODERATOR,
         ROLE_ADMIN
     }
 
+    public String getAuthority() {
+        return roleName.name();
+    }
 }
 

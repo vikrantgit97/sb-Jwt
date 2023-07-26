@@ -36,8 +36,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(signUpRequest.getPhone());
         user.setPostalCode(signUpRequest.getPostalCode());
         user.setRoles(Collections.singleton(Role.RoleName.ROLE_USER));
-        User save = repository.save(user);
-        return save;
+        return repository.save(user);
     }
 
     @Override
@@ -53,9 +52,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserDetail(Long customerNumber, User user) {
-        repository.findById(customerNumber).orElseThrow(
-                () -> new IllegalArgumentException("customer not found " + customerNumber)
+    public User updateUserDetail(Long id, User user) {
+        repository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("customer not found " + id)
         );
         return repository.save(user);
     }
@@ -73,12 +72,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByuserFirstName(String customerFirstName) {
+    public User findByUserFirstName(String customerFirstName) {
         return repository.findByUserFirstName(customerFirstName);
     }
 
     @Override
-    public User findByuserLastName(String customerLastName) {
+    public User findByUserLastName(String customerLastName) {
         return repository.findByUserLastName(customerLastName);
     }
 }

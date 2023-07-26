@@ -85,6 +85,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role.RoleName> roles;
 
+
+   /* @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+                @Enumerated(EnumType.STRING)
+    private Set<Role.RoleName> roles;*/
+
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
@@ -133,6 +141,16 @@ public class User implements UserDetails {
         return getRoles().stream()
                 .map(roleName -> new SimpleGrantedAuthority(roleName.name()))
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override

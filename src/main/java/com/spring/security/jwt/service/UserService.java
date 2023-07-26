@@ -13,15 +13,15 @@ public interface UserService {
 
     public User registerUser(User userNumber);
 
-    public User updateUserDetail(Long customerNumber, User user);
+    public User updateUserDetail(Long id, User user);
 
-    public User getUserById(Long customerNumber);
+    public User getUserById(Long id);
 
     public String deleteCustomer(Long customerNumber);
 
-    public User findByuserFirstName(String customerFirstName);
+    public User findByUserFirstName(String customerFirstName);
 
-    public User findByuserLastName(String customerLastName);
+    public User findByUserLastName(String customerLastName);
 
     public User findByUsername(String username);
 }

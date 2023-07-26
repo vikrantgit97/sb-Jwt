@@ -1,6 +1,7 @@
 package com.spring.security.jwt.security.jwt;
 
 import com.spring.security.jwt.repository.RefreshTokenRepository;
+import com.spring.security.jwt.security.security.MyUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,8 +28,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private  JwtUtils jwtService;
+    //@Autowired
+   // private  UserDetailsService userDetailsService;
     @Autowired
-    private  UserDetailsService userDetailsService;
+    private MyUserDetailService myUserDetailService;
     @Autowired
     private  RefreshTokenRepository tokenRepository;
 
@@ -44,15 +47,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        final String userEmail;
+        final String userName;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+        userName = jwtService.extractUsername(jwt);
+        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = myUserDetailService.loadUserByUsername(userName);
             var isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);

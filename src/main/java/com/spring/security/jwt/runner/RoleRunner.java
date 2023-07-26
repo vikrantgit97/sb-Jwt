@@ -31,7 +31,7 @@ public class RoleRunner implements CommandLineRunner {
         Set<Role.RoleName> Roles = new HashSet<>();
         List<User> users = new ArrayList<>();
         if (repository.count() == 0) {
-            if (!repository.findByName(Role.RoleName.ROLE_USER).isPresent()) {
+            if (!repository.findByRoleName(Role.RoleName.ROLE_USER).isPresent()) {
                 Role user = new Role();
                 user.setRoleName(Role.RoleName.ROLE_USER);
                 repository.save(user);
@@ -42,7 +42,7 @@ public class RoleRunner implements CommandLineRunner {
                 users.add(new User("Mark", "Brown", "7778889999", "987 Pine Rd", "north", "San Francisco", "CA", 941001, "USA", "markbrown", "markbrown@email.com", passwordEncoder.encode("password"), Collections.singleton(user.getRoleName())));
                 users.add(new User("Sarah", "Davis", "4445556666", "654 Cedar Ln", "north", "Boston", "MA", 921001, "USA", "sarahdavis", "sarahdavis@email.com", passwordEncoder.encode("password"), Collections.singleton(user.getRoleName())));
             }
-            if (!repository.findByName(Role.RoleName.ROLE_ADMIN).isPresent()) {
+            if (!repository.findByRoleName(Role.RoleName.ROLE_ADMIN).isPresent()) {
                 Role admin = new Role();
                 admin.setRoleName(Role.RoleName.ROLE_ADMIN);
                 repository.save(admin);
@@ -52,7 +52,7 @@ public class RoleRunner implements CommandLineRunner {
                 users.add(new User("Brock", "Lesnar", "9234567890", "lesnar yard nyc 56", "north", "New York", "NY", 165001, "USA", "brock", "brock@email.com", passwordEncoder.encode("password"), Collections.singleton(admin.getRoleName())));
                 users.add(new User("Bill", "Goldbregr", "7234567890", "north submarine 65", "north", "New York", "NY", 198001, "USA", "bill", "bill@email.com", passwordEncoder.encode("password"), Collections.singleton(admin.getRoleName())));
             }
-            if (!repository.findByName(Role.RoleName.ROLE_MODERATOR).isPresent()) {
+            if (!repository.findByRoleName(Role.RoleName.ROLE_MODERATOR).isPresent()) {
                 Role delivery_agent = new Role();
                 delivery_agent.setRoleName(Role.RoleName.ROLE_MODERATOR);
                 repository.save(delivery_agent);
