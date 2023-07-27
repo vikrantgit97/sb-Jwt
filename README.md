@@ -1,51 +1,77 @@
-# SpringBoot-Jwt  
-Access & Refresh token implemented authentication & athorization
-# Spring Boot Refresh Token with JWT example
+# Spring Boot 3.1.1 Security with JWT Implementation
+This project demonstrates the implementation of jwt using Spring Boot 3.1.1
+<img src="https://www.svgrepo.com/show/354380/spring-icon.svg" style="height: 40px">
+## [Springboot_Document](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
 
-Build JWT Refresh Token in the Java Spring Boot Application. You can know how to expire the JWT, then renew the Access Token with Refresh Token.
-The instruction can be found at:
-[Spring Boot Refresh Token with JWT example](https://bezkoder.com/spring-boot-refresh-token-jwt/)
+## Spring-Boot-Security-Json-Web-Token(JWT)-Application (Project_Structure)
+````
+└───src
+├───main
+│   ├───java
+│   │   └───com
+│   │       └───spring
+│   │           └───security
+│   │               └───jwt
+│   │                   ├───advice
+│   │                   ├───config
+│   │                   ├───controllers
+│   │                   ├───dto
+│   │                   ├───exception
+│   │                   ├───models
+│   │                   ├───payload
+│   │                   │   ├───request
+│   │                   │   └───response
+│   │                   ├───repository
+│   │                   ├───runner
+│   │                   ├───security
+│   │                   │   ├───jwt
+│   │                   │   └───security
+│   │                   ├───service
+│   │                   └───serviceimpl
+│   └───resources
+└───test
+└───java
+└───com
+└───spring
+└───security
+└───jwt
+````
 
-## User Registration, User Login and Authorization process.
-The diagram shows flow of how we implement User Registration, User Login and Authorization process.
+* [Install Ubuntu or any LINUX OS for Development ](https://releases.ubuntu.com/jammy/)<img src="https://assets.ubuntu.com/v1/a7e3c509-Canonical%20Ubuntu.svg" style="height: 50px">
 
-![spring-boot-spring-security-jwt-authentication-flow](src/main/resources/static/images/spring-boot-spring-security-jwt-authentication-flow.png)
+## Requirements
+Make sure to have the followings installed:
+<img src="https://www.freepnglogos.com/uploads/logo-mysql-png/logo-mysql-mysql-logo-png-images-are-download-crazypng-21.png" style="height: 40px">
+<img src="https://www.svgrepo.com/show/331370/docker.svg" style="height: 40px">
 
-And this is for Refresh Token:
+* To run locally
+    - MySQL Server
 
-![spring-boot-refresh-token-jwt-example-flow](src/main/resources/static/images/spring-boot-refresh-token-jwt-example-flow.png)
+* To run with Docker
+    - Docker (Ubuntu 22.04 [Installation guide](https://docs.docker.com/engine/install/ubuntu/))
+    - Docker-compose (Ubuntu 22.04 [Installation guide](https://docs.docker.com/compose/install/)))
+## Getting Started
+To get started with this project, you will need to have the following installed on your local machine:
 
-## Spring Boot Server Architecture with Spring Security
-You can have an overview of our Spring Boot Server with the diagram below:
+* JDK 17+
+* Maven 3+
 
-![spring-boot-jwt-authentication-spring-security-architecture](src/main/resources/static/images/spring-boot-jwt-authentication-spring-security-architecture.png)
+## Build and Run the project, follow these steps
+* Locally
+    - Clone the repository: git clone [SpringBoot-Jwt](https://github.com/vikrantgit97/SpringBoot-Jwt.git)
+    - Navigate to the project directory
+    - Create a database in MySql `spring_jwt`
+    - Build the project: `mvn clean install`
+    - Run `mvn clean package spring-boot:run` to build the artifact and run the application
 
-## Configure Spring Datasource, JPA, App properties
-Open `src/main/resources/application.properties`
+* Docker
+    - Run `docker-compose up --build -d` to run the docker services
 
-```properties
-spring.datasource.url= jdbc:mysql://localhost:3306/testdb?useSSL=false
-spring.datasource.username= root
-spring.datasource.password= root
-
-spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.MySQL5InnoDBDialect
-spring.jpa.hibernate.ddl-auto= update
-
-# App Properties
-koder.app.jwtSecret= KoderSecretKey
-koder.app.jwtExpirationMs= 3600000
-koder.app.jwtRefreshExpirationMs= 86400000
-```
-
-## Run Spring Boot application
+## Run Spring Boot application directly
 ```
 mvn spring-boot:run
 ```
 
-## Run following SQL insert statements
-```
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-```
+## Documentation (Swagger) to visualize the exposed API endpoints.
+Visit it [SwaggerDocumentation_SpringBoot_Application](http://localhost:8080/swagger-ui.html)
 
