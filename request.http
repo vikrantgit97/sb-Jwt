@@ -1,0 +1,28 @@
+###
+POST http://localhost:8080/api/v1/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "janedoe",
+  "password": "password"
+}
+
+
+###
+POST http://localhost:8080/api/v1/auth/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "59e6a616-8535-42ba-b119-d0c74b40acd4"
+}
+###
+
+GET http://localhost:8080/api/test/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW5lZG9lIiwiaWF0IjoxNjkwNTYxMzMxLCJleHAiOjE2OTA1NjE2MzF9.cJzlybuFB42YEexUiSBEfV_BRO_Qg2PNJeXirkpZZ6Y
+###
+
+GET http://localhost:8080/api/test/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW5lZG9lIiwiaWF0IjoxNjkwNTYyMzk3LCJleHAiOjE2OTA1NjI2OTd9.u1RCIrJOlfBrOlm7Z-jPpNMFIz9NWoJpYbg_hxTf0GA
+###
+
+POST http://localhost:8080/api/v1/auth/sign-up

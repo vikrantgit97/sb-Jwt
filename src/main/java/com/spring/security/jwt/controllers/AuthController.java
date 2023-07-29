@@ -31,10 +31,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private String code;
-
-    private Object data;
-
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -81,7 +77,6 @@ public class AuthController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         User user = userService.registerCustomerSignUp(signUpRequest);
-        data = "customer registered successfully";
         return ResponseEntity.ok(user);
     }
 
@@ -99,6 +94,4 @@ public class AuthController {
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
                         "Refresh token is not in database!"));
     }
-
-
 }

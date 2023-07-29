@@ -123,7 +123,7 @@ public class ExceptionHandler {
   }
 
 
-  @org.springframework.web.bind.annotation.ExceptionHandler({RuntimeException.class})
+  @org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ErrorDetails> handleRuntimeException(RuntimeException runtimeException) {
     ErrorDetails errorDetails = new ErrorDetails(runtimeException.getMessage(), "RA_SYS_ERR_501");
     log.error("handleRuntimeException :{} ",errorDetails);
