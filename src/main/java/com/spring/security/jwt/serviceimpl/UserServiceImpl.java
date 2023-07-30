@@ -6,6 +6,8 @@ import com.spring.security.jwt.payload.request.SignupRequest;
 import com.spring.security.jwt.repository.UserRepository;
 import com.spring.security.jwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -14,6 +16,9 @@ import java.util.Collections;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public Long getUserList() {
@@ -32,7 +37,7 @@ public class UserServiceImpl implements UserService {
         user.setCountry(signUpRequest.getCountry());
         user.setUsername(signUpRequest.getUsername());
         user.setEmail(signUpRequest.getEmail());
-        user.setPassword(signUpRequest.getPassword());
+        user.setPassword(encoder.encode(signUpRequest.getPassword()));
         user.setPhone(signUpRequest.getPhone());
         user.setPostalCode(signUpRequest.getPostalCode());
         user.setRoles(Collections.singleton(Role.RoleName.ROLE_USER));
