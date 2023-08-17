@@ -14,21 +14,21 @@ import java.time.Instant;
 public class RefreshToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     /*@OneToOne
-    @JoinColumn(name = "users_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;*/
 
-    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    /*@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    public User userId;*/
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     public User user;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    public User user;*/
-
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String token;
 
     @Column(nullable = false)

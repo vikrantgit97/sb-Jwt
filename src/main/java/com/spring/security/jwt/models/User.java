@@ -22,7 +22,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "user_tbl", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
+@Table(
+        name = "user_tbl", uniqueConstraints =
+        {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email"
+                )
+        }
+)
 @Data
 @NoArgsConstructor(force = true)
 @AllArgsConstructor

@@ -28,12 +28,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private  JwtUtils jwtService;
-    //@Autowired
-   // private  UserDetailsService userDetailsService;
     @Autowired
     private MyUserDetailService myUserDetailService;
-    @Autowired
-    private  RefreshTokenRepository tokenRepository;
 
     @Override
     protected void doFilterInternal(

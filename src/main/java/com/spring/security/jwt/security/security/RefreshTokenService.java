@@ -2,10 +2,12 @@ package com.spring.security.jwt.security.security;
 
 import com.spring.security.jwt.exception.TokenRefreshException;
 import com.spring.security.jwt.models.RefreshToken;
+import com.spring.security.jwt.models.User;
 import com.spring.security.jwt.repository.RefreshTokenRepository;
 import com.spring.security.jwt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +32,9 @@ public class RefreshTokenService {
 
 
     public RefreshToken createRefreshToken(Long userId) {
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUser(userRepository.findById(userId).get());
+        User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("user not found "+userId));
+        RefreshToken refreshToken=new RefreshToken();
+        refreshToken.setUser(user);
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
         refreshToken.setToken(UUID.randomUUID().toString());
         refreshToken = refreshTokenRepository.save(refreshToken);
