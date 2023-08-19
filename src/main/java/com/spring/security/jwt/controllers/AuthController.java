@@ -31,47 +31,41 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtils jwtUtils;
+    private final RefreshTokenService refreshTokenService;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, JwtUtils jwtUtils, RefreshTokenService refreshTokenService) {
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.jwtUtils = jwtUtils;
+        this.refreshTokenService = refreshTokenService;
+    }
 
-    @Autowired
-    private JwtUtils jwtUtils;
-
-    @Autowired
-    private RefreshTokenService refreshTokenService;
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public JwtResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Object principal = authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
 
-        String jwt = jwtUtils.generateToken((UserDetails) principal);
+        String jwt = jwtUtils.generateToken(user);
 
-        String s = jwtUtils.extractUsername(jwt);
+        List<String> roles = (user.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList()));
 
-        User byUsername = userService.findByUsername(s);
-        List<String> roles = ((UserDetails) principal).getAuthorities().stream().map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId(),user);
 
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(byUsername.getId());
-
-        return ResponseEntity.ok(new JwtResponse
+        return new JwtResponse
                 (
                         jwt,
                         refreshToken.getToken(),
-                        byUsername.getId(),
-                        byUsername.getUsername(),
-                        byUsername.getEmail(),
+                        user.getId(),
+                        user.getUsername(),
+                        user.getEmail(),
                         roles
-                )
         );
     }
 
@@ -84,18 +78,17 @@ public class AuthController {
 
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+    public TokenRefreshResponse refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
         String requestRefreshToken = request.getRefreshToken();
         return refreshTokenService.findByToken(requestRefreshToken)
-                .map(refreshTokenService::verifyExpiration)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                    String token = jwtUtils.generateToken(user);
-                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                .map(refreshToken -> {
+                    refreshTokenService.verifyExpiration(refreshToken); // Verify expiration
+                    String token = jwtUtils.generateToken(refreshToken.getUser());
+                    refreshTokenService.expireToken(refreshToken); // Save the updated entity
+                    return new TokenRefreshResponse(token, requestRefreshToken);
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
-                        "Refresh token is not in database!"
-                )
-        );
+                        "Refresh token is not matched!")
+                );
     }
 }

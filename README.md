@@ -88,7 +88,7 @@ spring-boot-refresh-token-jwt
                             └── SpringBootSecurityJwtApplicationTests.java
 ````
 
-* [Install Ubuntu or any LINUX OS for Development ](https://releases.ubuntu.com/jammy/)<img src="https://assets.ubuntu.com/v1/a7e3c509-Canonical%20Ubuntu.svg" style="height: 50px">
+* [Install any LINUX OS or Ubuntu for Development (Recommended) ](https://releases.ubuntu.com/jammy/)<img src="https://assets.ubuntu.com/v1/a7e3c509-Canonical%20Ubuntu.svg" style="height: 50px">
 
 ## Requirements
 Make sure to have the followings installed:
@@ -125,4 +125,3 @@ mvn spring-boot:run
 
 ## Documentation (Swagger) to visualize the exposed API endpoints.
 Visit it [SwaggerDocumentation_SpringBoot_Application](http://localhost:8080/swagger-ui.html)
-

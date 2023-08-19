@@ -5,38 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.util.Date;
 
 @Data
-@Entity(name = "refresh_token")
+@Entity
+@Table(name = "refresh_token")
 @AllArgsConstructor
 @NoArgsConstructor
 public class RefreshToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    /*@OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;*/
-
-    /*@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-    public User userId;*/
-
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",unique = true)
     public User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String token;
 
     @Column(nullable = false)
-    private Instant expiryDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expiryDate;
 
     public boolean revoked;
 
     public boolean expired;
 }
-
-
