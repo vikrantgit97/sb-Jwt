@@ -18,7 +18,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8080/api/test/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW1taSIsImlhdCI6MTY5MDcxNTA4OCwiZXhwIjoxNjkwNzE1Mzg4fQ.o42W1ZLUSQkc9visGE_uH4xxecRRMDvrGbKrH3bzc0E
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW5lZG9lIiwiaWF0IjoxNzMwMzg5MzkyLCJleHAiOjE3MzAzODk2OTJ9.oTETtTBVQygM1De8aIndZoau-6IPSc_mx6UshguCSNo
 
 ###
 

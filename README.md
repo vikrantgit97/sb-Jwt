@@ -1,5 +1,5 @@
-# Spring Boot 3.3.5 Security with JWT Implementation
-This project demonstrates the implementation of jwt using Spring Boot 3.3.5
+# Spring Security with JWT Implementation
+This project demonstrates the implementation of jwt using Spring Boot
 <img src="https://www.svgrepo.com/show/354380/spring-icon.svg" style="height: 40px">
 ## [Springboot_Document](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
 
@@ -15,11 +15,11 @@ spring-boot-refresh-token-jwt
 └── src
     ├── main
     │ ├── java
-    │ │ └── com
-    │ │     └── spring
+    │ │ └──in
+    │ │     └──vit
     │ │         └── security
     │ │             └── jwt
-    │ │                 ├── SpringBootSecurityJwtApplication.java
+    │ │                 ├── JwtApplication.java
     │ │                 ├── advice
     │ │                 │ ├── ErrorMessage.java
     │ │                 │ └── ExceptionHandler.java
@@ -68,7 +68,7 @@ spring-boot-refresh-token-jwt
     │ │                 │ │ ├── AuthTokenFilter.java
     │ │                 │ │ └── JwtUtils.java
     │ │                 │ └── security
-    │ │                 │     ├── MyUserDetailService.java
+    │ │                 │     ├── UserDetailServiceImpl.java
     │ │                 │     └── RefreshTokenService.java
     │ │                 ├── service
     │ │                 │ ├── ProductService.java
@@ -81,11 +81,11 @@ spring-boot-refresh-token-jwt
     │     └── queries.sql
     └── test
         └── java
-            └── com
-                └── spring
+            └── in
+                └── vit
                     └── security
                         └── jwt
-                            └── SpringBootSecurityJwtApplicationTests.java
+                            └── JwtApplication.java
 ````
 
 * [Install any LINUX OS or Ubuntu for Development (Recommended) ](https://releases.ubuntu.com/noble/)<img src="https://assets.ubuntu.com/v1/a7e3c509-Canonical%20Ubuntu.svg" style="height: 50px">
@@ -104,14 +104,14 @@ Make sure to have the followings installed:
 ## Getting Started
 To get started with this project, you will need to have the following installed on your local machine:
 
-* JDK 17+
+* JDK 21+
 * Maven 3+
 
 ## Build and Run the project, follow these steps
 * Locally
-    - Clone the repository: git clone [SpringBoot-Jwt](https://github.com/vikrantgit97/SpringBoot-Jwt.git)
+    - Clone the repository: git clone [SpringBoot-Jwt](https://github.com/vikrantgit97/sb-Jwt.git)
     - Navigate to the project directory
-    - Create a database in MySql `spring_jwt`
+    - Create a database in MySql `jwt`
     - Build the project: `mvn clean install`
     - Run `mvn clean package spring-boot:run` to build the artifact and run the application
 
@@ -124,4 +124,4 @@ mvn spring-boot:run
 ```
 
 ## Documentation (Swagger) to visualize the exposed API endpoints.
-Visit it [SwaggerDocumentation_SpringBoot_Application](http://localhost:8080/swagger-ui.html)
+Visit it [SwaggerDocumentation_Jwt_Application](http://localhost:8080/swagger-ui.html)
