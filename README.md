@@ -1,5 +1,5 @@
-# Spring Boot 3.1.1 Security with JWT Implementation
-This project demonstrates the implementation of jwt using Spring Boot 3.1.1
+# Spring Boot 3.3.5 Security with JWT Implementation
+This project demonstrates the implementation of jwt using Spring Boot 3.3.5
 <img src="https://www.svgrepo.com/show/354380/spring-icon.svg" style="height: 40px">
 ## [Springboot_Document](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
 
@@ -88,7 +88,7 @@ spring-boot-refresh-token-jwt
                             └── SpringBootSecurityJwtApplicationTests.java
 ````
 
-* [Install any LINUX OS or Ubuntu for Development (Recommended) ](https://releases.ubuntu.com/jammy/)<img src="https://assets.ubuntu.com/v1/a7e3c509-Canonical%20Ubuntu.svg" style="height: 50px">
+* [Install any LINUX OS or Ubuntu for Development (Recommended) ](https://releases.ubuntu.com/noble/)<img src="https://assets.ubuntu.com/v1/a7e3c509-Canonical%20Ubuntu.svg" style="height: 50px">
 
 ## Requirements
 Make sure to have the followings installed:
@@ -99,8 +99,8 @@ Make sure to have the followings installed:
     - MySQL Server
 
 * To run with Docker
-    - Docker (Ubuntu 22.04 [Installation guide](https://docs.docker.com/engine/install/ubuntu/))
-    - Docker-compose (Ubuntu 22.04 [Installation guide](https://docs.docker.com/compose/install/)))
+    - Docker (Ubuntu 24.04 [Installation guide](https://docs.docker.com/engine/install/ubuntu/))
+    - Docker-compose (Ubuntu 24.04 [Installation guide](https://docs.docker.com/compose/install/)))
 ## Getting Started
 To get started with this project, you will need to have the following installed on your local machine:
 
